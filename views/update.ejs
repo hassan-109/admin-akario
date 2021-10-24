@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Update</title>
+    <link rel="stylesheet" href="/public/css/update.css">
+</head>
+
+<body>
+
+
+
+    <article class="leaderboard">
+        <header>
+            <a style="position: absolute;
+            top: 50%;
+            left: 10%;
+            margin-top: -25px;" href="/">
+                <img herf="" src="https://img.icons8.com/cute-clipart/50/000000/home.png" />
+            </a>
+            <h1 class="leaderboard__title"><span class="leaderboard__title--top">Members</span><span
+                    class="leaderboard__title--bottom">
+                    <%= title%>
+                </span></h1>
+        </header>
+
+
+        <main class="leaderboard__profiles">
+
+            <form role="search" method="POST" action="/search/<%=title%>">
+                <label for="search">Search for member</label>
+                <input id="search" name="search" type="search" placeholder="Search..." autofocus />
+                <button type="submit">Go</button>
+            </form>
+            <!---->
+            <% members.forEach(member=> { %>
+                <article onclick="document.location='/update-form/<%=title%>/<%= member.id %>'"
+                    class="leaderboard__profile">
+                    <span class="leaderboard__name">
+                        <%= member.name %>
+                    </span>
+                    <% if (title==="Warnings" ) { %>
+                        <span class="leaderboard__value">
+                            <%= member.warningCount%>
+                        </span>
+                        <% } else {%>
+                            <span class="leaderboard__value">
+                                <%= member.money%><span>K</span>
+                            </span>
+                            <% } %>
+                </article>
+                <% }) %>
+        </main>
+        </div>
+</body>
+
+</html>

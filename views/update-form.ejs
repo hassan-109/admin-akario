@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title><%=title%></title>
+    <link rel="stylesheet" href="/public/css/update_form.css">
+
+</head>
+
+<body>
+    <div class="login-box">
+        <h2>Updata <%=member.name%> <%=title%></h2>
+        <form id="update-form" method="post" action="/update/<%=title%>">
+          <div class="user-box" >
+              <% if (title === "Warnings") { %>
+               <label>Current warning : <%= member.warningCount %></label>
+              <% } else {%>
+                <label>Current money : <%= member.money %> <span>K</span></label>
+                <% }%>
+            <input type="text" name=""  readonly value="">
+          </div>
+          <div class="user-box">
+            <input type="number" name="added" required="" value = "0">
+            <label>Add</label>
+          </div>
+          <div class="user-box">
+            <input type="number" name="removed" required="" value = "0">
+            <label>Remove</label>
+          </div>
+          <a href="#" onclick="submit()">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            Submit
+          </a>
+        </form>
+      </div>
+      <script>
+        function submit() {
+            document.getElementById("update-form").submit();
+        }
+    </script>
+</body>
+
+</html>

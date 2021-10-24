@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Member Home</title>
+    <link rel="stylesheet" href="/public/css/update.css">
+
+</head>
+
+<body>
+
+    <article class="leaderboard">
+        <header>
+            <h1 class="leaderboard__title"><span class="leaderboard__title--top">Members</span><span
+                    class="leaderboard__title--bottom">info</span></h1>
+        </header>
+
+
+        <main class="leaderboard__profiles">
+
+            <form role="search" method="POST" action="/search/memberhome">
+                <label for="search">Search for member</label>
+                <input id="search" name="search" type="search" placeholder="Search..." autofocus />
+                <button type="submit">Go</button>
+            </form>
+            <article onclick="document.location='/add-form'" class="leaderboard__profile">
+                <span class="leaderboard__name" style="color: rgb(218, 59, 59);">Name</span>
+                <span class="leaderboard__value" style="font-size: medium; color: rgb(218, 59, 59);"> warning </span>
+                <span class="leaderboard__value" style="font-size: medium; color: rgb(218, 59, 59);"> money </span>
+            </article>
+            <!---->
+            <% members.forEach(member=> { %>
+                <article onclick="deleteMember('<%= String(member.id) %>')" class="leaderboard__profile">
+                    <span class="leaderboard__name">
+                        <%= member.name %>
+                    </span>
+                    <span class="leaderboard__value">
+                        <%= member.warningCount%>
+                    </span>
+                    <span class="leaderboard__value">
+                        <%= member.money%><span>K</span>
+                    </span>
+                </article>
+                <% }) %>
+        </main>
+        </div>
+</body>
+
+</html>

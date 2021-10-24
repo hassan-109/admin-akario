@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>
+        Add New Member
+    </title>
+    <link rel="stylesheet" href="/public/css/update_form.css">
+
+</head>
+
+<body>
+    <div class="login-box">
+        <h2>Add New Member</h2>
+        <form id="add-form" method="post" action="/add">
+            <div class="user-box">
+                <input type="text" name="name" required>
+                <label>Name</label>
+            </div>
+            <div class="user-box">
+                <input type="tel" name="phoneNumber" required>
+                <label>Phone Number</label>
+            </div>
+            <div class="user-box">
+                <input type="number" name="warningCount" required value="0">
+                <label>Warnings</label>
+            </div>
+            <div class="user-box">
+                <input type="number" name="money" required value="0">
+                <label>Money</label>
+            </div>
+            <a href="#" onclick="submit()">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                Submit
+            </a>
+        </form>
+    </div>
+    <script>
+        function submit() {
+            document.getElementById("add-form").submit();
+        }
+    </script>
+</body>
+
+</html>
