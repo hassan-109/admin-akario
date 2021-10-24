@@ -28,7 +28,7 @@ https.get(AllAdminsApi, (respons) => {
   });
 
 }).on('error', (e) => {
-  console.error(e);
+ // console.error(e);
 });
 
 
@@ -57,7 +57,7 @@ exports.getMembers = (callBack) => {
     });
 
   }).on('error', (e) => {
-    console.error(e);
+  //  console.error(e);
     callBack(null);
   });
 }
@@ -77,7 +77,7 @@ exports.getMemberById = (id, callBack) => {
       callBack(member);
     });
   }).on('error', (e) => {
-    console.error(e);
+   // console.error(e);
     callBack(null);
   });
 }
@@ -104,7 +104,7 @@ exports.updateMember = (id, type, newValue, callBack) => {
       callBack(JSON.stringify(response.data));
     })
     .catch(function (error) {
-      console.log(error);
+      //console.log(error);
       callBack(null);
     });
 }
@@ -129,7 +129,7 @@ exports.creatMember = (newMemeber, callBack) => {
         callBack(JSON.stringify(response.data));
       })
     .catch((error) => {
-        console.log(error);
+       // console.log(error);
         callBack(null);
       });
 }
@@ -156,7 +156,7 @@ exports.deleteMember = (id,callBack) =>{
         callBack(JSON.stringify(response.data));
       })
     .catch((error) => {
-        console.log(error);
+       // console.log(error);
         callBack(null);
       });
 }
