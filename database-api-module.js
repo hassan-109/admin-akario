@@ -36,12 +36,17 @@ https.get(AllAdminsApi, (respons) => {
 exports.getAdmins =  ()=>{
   return AdminValues;
 }
-
+//&page=2
 exports.getMembers = (callBack) => {
   https.get(AllMembersApi, (respons) => {
+    let mData = '';
     respons.on('data', (data) => {
+      mData += data;
+    });
+    respons.on("end", function () {
       const MembersValues = [];
-      const MemberData = JSON.parse(data);
+      const MemberData = JSON.parse(mData);
+      
       let memberValues;
       for (let record of MemberData.records) {
         memberValues = {
@@ -53,14 +58,40 @@ exports.getMembers = (callBack) => {
         };
         MembersValues.push(memberValues);
       }
-      callBack(MembersValues);
-    });
 
+      /*/*/
+      https.get(AllMembersApi + "&page=2", (respons) => {
+        let mData = '';
+        respons.on('data', (data) => {
+          mData += data;
+        });
+        respons.on("end", function () {
+          const MemberData = JSON.parse(mData);
+          
+          let memberValues;
+          for (let record of MemberData.records) {
+            memberValues = {
+              id: record.id,
+              name: record.values.cEt1GHeXLcHlpcT8kPgwmP,
+              PhoneNumber: record.values.dcGCofW5LofA8zW7JdHSkD,
+              warningCount: record.values.aVBmooW75dM4ksxGORdmot,
+              money: record.values.cNWRuRWRTnWRFdHdOKvCkp
+            };
+            MembersValues.push(memberValues);
+          }
+          callBack(MembersValues);
+        });
+      }).on('error', (e) => {
+      //  console.error(e);
+        callBack(null);
+      });
+    });
   }).on('error', (e) => {
   //  console.error(e);
     callBack(null);
   });
 }
+
 
 exports.getMemberById = (id, callBack) => {
   const MemberByIdApi = "https://quintadb.com/apps/" + AkarioDatabaseID + "/dtypes/" + id + ".json?rest_api_key=" + ApiKey;
