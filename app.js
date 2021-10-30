@@ -1,13 +1,17 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const ejs = require("ejs");
-const database = require(__dirname + "/database-api-module.js");
+const cookieParser= require('cookie-parser');
+const caspioDatabase = require(__dirname + "/database-api-module-v2.js");
+
 
 const app = express();
 
-const Admins = database.getAdmins();
+let Admins =[];
 
-let loggedAdmin = null;
+caspioDatabase.getAdmins((admins)=>{
+  Admins = admins;
+});
 let chosenMember = null;
 
 app.set("view engine", "ejs");
@@ -20,19 +24,19 @@ app.use(
 
 app.use("/public", express.static(__dirname + "/public"));
 
+app.use(cookieParser());
+
 app.get("/login", function (req, res) {
   res.render("login.ejs");
 });
 
 app.get("/", function (req, res) {
-  if (!stayLogged(res)) return;
-  res.render("home.ejs", {
-    loggedAdmin: loggedAdmin,
-  });
+  if (!stayLogged(res,req)) return;
+  res.render("home.ejs");
 });
 
 app.get("/members", function (req, res) {
-  database.getMembers(function (MembersValues) {
+  caspioDatabase.getMembers(function (MembersValues) {
     if (MembersValues !== null) {
       res.render("member-home.ejs", {
         members: MembersValues,
@@ -42,18 +46,18 @@ app.get("/members", function (req, res) {
 });
 
 app.get("/members/:q", function (req, res) {
-  database.getMembers(function (MembersValues) {
+  caspioDatabase.getSearchedMembers(req.params.q,function (MembersValues) {
     if (MembersValues !== null) {
       res.render("member-home.ejs", {
-        members: filterIt(MembersValues, req.params.q),
+        members: MembersValues,
       });
     }
   });
 });
 
 app.get("/add", function (req, res) {
-  if (!stayLogged(res)) return;
-  database.getMembers(function (MembersValues) {
+  if (!stayLogged(res,req)) return;
+  caspioDatabase.getMembers(function (MembersValues) {
     if (MembersValues !== null) {
       res.render("add.ejs", {
         members: MembersValues,
@@ -64,25 +68,25 @@ app.get("/add", function (req, res) {
 
 
 app.get("/add/:q", function (req, res) {
-  if (!stayLogged(res)) return;
-  database.getMembers(function (MembersValues) {
+  if (!stayLogged(res,req)) return;
+  caspioDatabase.getSearchedMembers(req.params.q,function (MembersValues) {
     if (MembersValues !== null) {
       res.render("add.ejs", {
-        members: filterIt(MembersValues, req.params.q),
+        members: MembersValues,
       });
     }
   });
 });
 
 app.get("/add-form", function (req, res) {
-  if (!stayLogged(res)) return;
+  if (!stayLogged(res,req)) return;
   res.render("add-form.ejs");
 });
 
 
 app.get("/update/:listType", function (req, res) {
-  if (!stayLogged(res)) return;
-  database.getMembers(function (MembersValues) {
+  if (!stayLogged(res,req)) return;
+  caspioDatabase.getMembers(function (MembersValues) {
     if (MembersValues !== null) {
       res.render("update.ejs", {
         title: req.params.listType,
@@ -93,20 +97,20 @@ app.get("/update/:listType", function (req, res) {
 });
 
 app.get("/update/:listType/:q", function (req, res) {
-  if (!stayLogged(res)) return;
-  database.getMembers(function (MembersValues) {
+  if (!stayLogged(res,req)) return;
+  caspioDatabase.getSearchedMembers(req.params.q,function (MembersValues) {
     if (MembersValues !== null) {
       res.render("update.ejs", {
         title: req.params.listType,
-        members: filterIt(MembersValues, req.params.q),
+        members: MembersValues,
       });
     }
   });
 });
 
 app.get("/update-form/:listType/:id", function (req, res) {
-  if (!stayLogged(res)) return;
-  database.getMemberById(req.params.id, function (ChosenMember) {
+  if (!stayLogged(res,req)) return;
+  caspioDatabase.getMemberById(req.params.id, function (ChosenMember) {
     if (ChosenMember !== null) {
       chosenMember = ChosenMember;
       res.render("update-form.ejs", {
@@ -118,7 +122,7 @@ app.get("/update-form/:listType/:id", function (req, res) {
 });
 
 app.get("/delete/member/:id",function(req,res){
-  database.deleteMember(req.params.id,function(data){
+  caspioDatabase.deleteMember(req.params.id,function(data){
     if(data !== null){
       res.redirect("/add");
     }
@@ -127,7 +131,7 @@ app.get("/delete/member/:id",function(req,res){
 
 app.get("/update/member/:newName/:id",function(req,res){
   req.params.id
-  database.updateMember(req.params.id,"Name",req.params.newName,function (e) {
+  caspioDatabase.updateMember(req.params.id,"Name",req.params.newName,function (e) {
       if (e !== null) {
         res.redirect("/add");
       }
@@ -137,6 +141,8 @@ app.get("/update/member/:newName/:id",function(req,res){
 
 app.post("/login", function (req, res) {
   if (isLoginSuccessfully(req.body.phoneNumber, req.body.password)) {
+    res.cookie('isLoggedAdmin', true, { expires: new Date(Date.now() + 900000), httpOnly: true })
+
     res.redirect("/");
     return;
   }
@@ -165,7 +171,7 @@ app.post("/update/:listType", function (req, res) {
   const removed = parseInt(req.body.removed);
   const newValue = current + added - removed;
 
-  database.updateMember(
+  caspioDatabase.updateMember(
     chosenMember.id,
     req.params.listType,
     newValue,
@@ -185,15 +191,15 @@ app.post("/add",function(req,res){
     money :req.body.money
   }
 
-  database.creatMember(newMemeber,(data)=>{
+  caspioDatabase.creatMember(newMemeber,(data)=>{
     if(data !== null){
       res.redirect("/add");
     }
   })
 })
 
-function stayLogged(res) {
-  if (loggedAdmin === null) {
+function stayLogged(res,req) {
+  if (!req.cookies.isLoggedAdmin) {
     res.redirect("/login");
     return false;
   }
@@ -201,6 +207,7 @@ function stayLogged(res) {
 }
 
 function isLoginSuccessfully(userPhoneNumber, userPassword) {
+ 
   let isCurrectPassword = false;
   for (var admin of Admins) {
     if (
@@ -214,15 +221,6 @@ function isLoginSuccessfully(userPhoneNumber, userPassword) {
   return isCurrectPassword;
 }
 
-function filterIt(arr, searchKey) {
-  return arr.filter(function (obj) {
-    return Object.keys(obj).some(function (key) {
-      if(searchKey === undefined)
-      return
-      return obj[key].includes(String(searchKey));
-    });
-  });
-}
 
 app.listen(process.env.PORT || 5000, function() {
  // console.log("Server started on port 5000");
