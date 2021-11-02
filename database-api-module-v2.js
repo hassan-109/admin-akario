@@ -1,7 +1,37 @@
 const https = require("https");
 const axios = require("axios"); // using for post request
-const AuthorizationToken = "Bearer rUfuYNeewQ0cxHRO2alb2UHThAV_l6wiudZXXIYX8Ic4z0tbns387DiFpI7YdyoWkCYq4-Bj4qnVzCyrQUiSYaTyDTM_3EMsC4Ix2S4XAjPwNesHn_V_KohOhjQBhkreIxnO-Dn7a67XuLVbB6gcGO75JGVxn68CtYj6e0lollFh40yzB2SnM02WNTy0HUu0jycSgqj8K-HMNX98EWFqn-KX4nnwKtJcM4WKJOqekWBYm6mjw1_4sYuzCD_cmkmdcbnJWq8SDxnAnxieDnIvGH10CSh_2St-6audNkSG0GRZi-m9zSeeZ6xBj69Lw4Er0C2RoEQ4LibDHY4ws8vdnjl71GGPIW3Ebvnp1izvFaSrN0Jk4CRtgSC4gk5UeGc2";
-  
+const schedule = require('node-schedule'); // for schedule the event
+
+let AuthorizationToken = "Bearer rUfuYNeewQ0cxHRO2alb2UHThAV_l6wiudZXXIYX8Ic4z0tbns387DiFpI7YdyoWkCYq4-Bj4qnVzCyrQUiSYaTyDTM_3EMsC4Ix2S4XAjPwNesHn_V_KohOhjQBhkreIxnO-Dn7a67XuLVbB6gcGO75JGVxn68CtYj6e0lollFh40yzB2SnM02WNTy0HUu0jycSgqj8K-HMNX98EWFqn-KX4nnwKtJcM4WKJOqekWBYm6mjw1_4sYuzCD_cmkmdcbnJWq8SDxnAnxieDnIvGH10CSh_2St-6audNkSG0GRZi-m9zSeeZ6xBj69Lw4Er0C2RoEQ4LibDHY4ws8vdnjl71GGPIW3Ebvnp1izvFaSrN0Jk4CRtgSC4gk5UeGc2";
+
+
+
+const rule = new schedule.RecurrenceRule();
+rule.hour = 0;
+rule.tz = "Asia/Riyadh";
+
+const job = schedule.scheduleJob(rule, () => {
+  let data =" grant_type=client_credentials&client_id=da734859e9554e6579f7aa274945e625dcdf640018821f2f01&client_secret=54ce51753685479eb44f91cf99f1ca8ba9983465cb9b3b84cd";
+
+  let config = {
+    method: "post",
+    url: "https://c2aco568.caspio.com/oauth/token",
+    headers: {
+      "Content-Type": "text/plain",
+    },
+    data: data,
+  };
+
+  axios(config)
+    .then((response) => {
+      AuthorizationToken = "Bearer " + response.data.access_token;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+
 exports.getAdmins =  (callBack)=>{
     const AllAdminsApi ="https://c2aco568.caspio.com/rest/v2/tables/admins/records";
     var config = {
