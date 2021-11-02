@@ -23,8 +23,8 @@ function deleteOrEditMember(item, id) {
                 );
               }
             });
-            islong = 2;
-          }, 2000);
+            islong = 1;
+          }, 1000);
       })
     .mouseup(function () {
       if (islong == 0) {
