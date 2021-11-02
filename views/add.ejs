@@ -33,7 +33,7 @@
             </form>
             <!---->
             <% members.forEach(member=> { %>
-                <article onclick="deleteMember(this,'<%= String(member.id) %>')" class="leaderboard__profile">
+                <article onclick="deleteOrEditMember(this,'<%= String(member.id) %>')" class="leaderboard__profile">
                     <span class="leaderboard__name">
                         <%= member.name %>
                     </span>
