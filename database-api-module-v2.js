@@ -220,7 +220,6 @@ exports.updateMember = (id,type, newValue, callBack) =>{
 }
 
 exports.deleteMember = (id,callBack) =>{
-    id++
     const DeleteMemberByIdApi = "https://c2aco568.caspio.com/rest/v2/tables/members/records?q.where=PK_ID=" +id
     let config = {
       method: 'delete',
