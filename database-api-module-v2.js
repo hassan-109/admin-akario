@@ -66,7 +66,7 @@ exports.getAdmins =  (callBack)=>{
 }
 
 exports.getMembers = (callBack) => {
-  const AllMembersApi ="https://c2aco568.caspio.com/rest/v2/tables/members/records";
+  const AllMembersApi ="https://c2aco568.caspio.com/rest/v2/tables/members/records?q.limit=300";
   var config = {
     method: "get",
     url: AllMembersApi,
