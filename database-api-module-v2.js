@@ -2,7 +2,7 @@ const https = require("https");
 const axios = require("axios"); // using for post request
 const schedule = require('node-schedule'); // for schedule the event
 
-let AuthorizationToken = "Bearer QkKHQhhxSSu0MdfTzO_58yNcClQMH4iM7MORLF4PVbvjTDSDJpll4cLmytUluh0fFgrsgBlZ2bSkoZloP_3SFFgeSzr_xsK5s8yqMGQ9O4gncYs3HqeSDQv2_T2VBLT7jP1dYivfxo9Xt2nLYaHLyIFEoUH70A3dL6ZvM12FB5oK4RPRJOOADZvwbeGtg26UsZnIEWUJPXp7IEbD0M-RdopbPwGDupH7879lE3aRS-LlaphLtmQLAdxhxWYqsB5dbinuelObye_epEsxMosiw-Vsjo3c8GnPbZyg1_P-EQ7Fz6AMhgAK6COwzB-aDegNQR991doyYRU2LoHoFV7U-J5Q91WeoPtYnExlSV7KET_rtJyhaRb3eNSYo5-qmUHi";
+let AuthorizationToken = "Bearer dVY5o1rA3ZdFTHC1diCEd781QC2y51i4JTRj5sUn0qLE6rw6LCw_xoPQytIe6SXpOWlMLZGjISF09Ku9ujoOOeiHbew8DAhiEacr5qz6Ud3pzG4EqkwBDenkPCa7fhckW6nxpfUuhaSrd7c85v0C9abwctZBrpEoNfScyR8i76cnbYWCtqc-OLT--T0w4aIxwrbumSOfPMO-IT38jwzri9WvW6mh6igPfJaxg01JtBpwWmfvUlZx2TynJ5RphlKdlSGqB-6H61rs_ZXpPZEDXsWTYtS3X78BEgsSjyGbnlrxVU2Q3YPYY_PyWbfY8Qu_stL4X6fFoQGTlpBKJfD29xCtB4hQBU4eWW9CDPh9teUC7HLPdWVvFkOZIjVI3-uL";
 
 
 
@@ -14,7 +14,7 @@ const job = schedule.scheduleJob(rule, () => {}
   
 
   */
- let data =" grant_type=client_credentials&client_id=da734859e9554e6579f7aa274945e625dcdf640018821f2f01&client_secret=54ce51753685479eb44f91cf99f1ca8ba9983465cb9b3b84cd";
+ /*let data =" grant_type=client_credentials&client_id=da734859e9554e6579f7aa274945e625dcdf640018821f2f01&client_secret=54ce51753685479eb44f91cf99f1ca8ba9983465cb9b3b84cd";
 
   let config = {
     method: "post",
@@ -30,7 +30,7 @@ axios(config)
     })
     .catch((error) => {
       console.log(error);
-    });
+    });*/
 
 exports.getAdmins =  (callBack)=>{
     const AllAdminsApi ="https://c2aco568.caspio.com/rest/v2/tables/admins/records";
