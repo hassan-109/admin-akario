@@ -14,7 +14,7 @@ const job = schedule.scheduleJob(rule, () => {}
   
 
   */
- /*let data =" grant_type=client_credentials&client_id=da734859e9554e6579f7aa274945e625dcdf640018821f2f01&client_secret=54ce51753685479eb44f91cf99f1ca8ba9983465cb9b3b84cd";
+ let data =" grant_type=client_credentials&client_id=da734859e9554e6579f7aa274945e625dcdf640018821f2f01&client_secret=54ce51753685479eb44f91cf99f1ca8ba9983465cb9b3b84cd";
 
   let config = {
     method: "post",
@@ -30,7 +30,7 @@ axios(config)
     })
     .catch((error) => {
       console.log(error);
-    });*/
+    });
 
 exports.getAdmins =  (callBack)=>{
     const AllAdminsApi ="https://c2aco568.caspio.com/rest/v2/tables/admins/records";
@@ -191,14 +191,13 @@ exports.creatMember = (newMemeber, callBack) =>{
 
 exports.updateMember = (id,type, newValue, callBack) =>{
     let updatedValue 
-    id++
     let updateMemberApi="https://c2aco568.caspio.com/rest/v2/tables/members/records?q.where=PK_ID=" +id;
     if (type === "Name") {
       updatedValue = {name: newValue,};
     } else if (type === "Warnings") {
-      updatedValue = {warnings: newMemeber.warningCount,};
+      updatedValue = {warnings: newValue,};
     } else {
-      updatedValue = {money: newMemeber.money,};
+      updatedValue = {money: newValue,};
     }
     var config = {
       method: "put",
@@ -215,6 +214,7 @@ exports.updateMember = (id,type, newValue, callBack) =>{
         callBack(JSON.stringify(response.data));
       })
       .catch((error) => {
+        console.log(error);
        // callBack(null);
       });
 }
