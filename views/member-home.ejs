@@ -24,7 +24,7 @@
                 <input id="search" name="search" type="search" placeholder="Search..." autofocus />
                 <button type="submit">Go</button>
             </form>
-            <article onclick="document.location='/add-form'" class="leaderboard__profile">
+            <article  class="leaderboard__profile">
                 <span class="leaderboard__name" style="color: rgb(218, 59, 59);">Name</span>
                 <span class="leaderboard__value" style="font-size: medium; color: rgb(218, 59, 59);"> warning </span>
                 <span class="leaderboard__value" style="font-size: medium; color: rgb(218, 59, 59);"> money </span>
@@ -36,7 +36,7 @@
                         <%= member.name %>
                     </span>
                     <span class="leaderboard__value">
-                        <%= member.warningCount%>
+                        <%= member.warningCount%> <span style="color: white;">|||</span> 
                     </span>
                     <span class="leaderboard__value">
                         <%= member.money%><span>K</span>
