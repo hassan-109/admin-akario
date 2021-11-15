@@ -40,7 +40,7 @@ exports.getMembers = (callBack) => {
 };
 
 exports.getSearchedMembers = (q, callBack) => {
-  MemberModel.find({ "name": { $regex: '.*' + q + '.*' } },(error, result) => {
+  MemberModel.find({ name: { $regex: ".*" + q + ".*" } }, (error, result) => {
     if (error) callBack(null);
     else callBack(result);
   });
