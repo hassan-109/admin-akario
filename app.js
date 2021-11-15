@@ -31,6 +31,12 @@ app.get("/login", function (req, res) {
   res.render("login.ejs");
 });
 
+app.get("/test", function (req, res) {
+  mongodbDatabase.getSearchedMembers("لو",(callBack)=>{
+    res.send(callBack)
+  });
+});
+
 app.get("/", function (req, res) {
   if (!stayLogged(res,req)) return;
   res.render("home.ejs");
