@@ -1,6 +1,13 @@
+const e = require("express");
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost:27017/blogDB", { useNewUrlParser: true });
+mongoose.connect(
+  "mongodb+srv://admin:gPrZG5vQD5yx1L26@cluster0.7hl3w.mongodb.net/akarioDataBase?retryWrites=true&w=majority",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+);
 
 const adminSchema = {
   phone_number: String,
@@ -10,7 +17,6 @@ const adminSchema = {
 
 const memberSchema = {
   phone_number: String,
-  password: String,
   name: String,
   money: Number,
   warnings: Number,
@@ -19,30 +25,38 @@ const memberSchema = {
 const AdminModel = mongoose.model("Admin", adminSchema);
 const MemberModel = mongoose.model("Member", memberSchema);
 
-exports.getAdmins =  (callBack)=>{
-
-}
+exports.getAdmins = (callBack) => {
+  AdminModel.find((error, result) => {
+    if (error) callBack(null);
+    else callBack(result);
+  });
+};
 
 exports.getMembers = (callBack) => {
+  MemberModel.find((error, result) => {
+    if (error) callBack(null);
+    else callBack(result);
+  });
+};
 
-}
+exports.getSearchedMembers = (q, callBack) => {};
 
-exports.getSearchedMembers = (q,callBack) => {
+exports.getMemberById = (id, callBack) => {};
 
-}
+exports.creatMember = (newMemeber, callBack) => {
+  new MemberModel({
+    phone_number: newMemeber.phone_number,
+    name: newMemeber.name,
+    money: newMemeber.money,
+    warnings: newMemeber.warnings,
+  })
+    .save()
+    .then((error, result) => {
+      if (error) callBack(null);
+      else callBack(result);
+    });
+};
 
-exports.getMemberById = (id, callBack) => {
+exports.updateMember = (id, type, newValue, callBack) => {};
 
-}
-
-exports.creatMember = (newMemeber, callBack) =>{
-
-}
-
-exports.updateMember = (id,type, newValue, callBack) =>{
-
-}
-
-exports.deleteMember = (id,callBack) =>{
-    
-}
+exports.deleteMember = (id, callBack) => {};

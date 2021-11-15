@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const ejs = require("ejs");
 const cookieParser= require('cookie-parser');
 const caspioDatabase = require(__dirname + "/database-api-module-v2.js");
+const mongodbDatabase = require(__dirname + "/database-api-module-v3.js");
 
 
 const app = express();
