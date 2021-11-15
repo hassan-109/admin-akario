@@ -166,7 +166,7 @@ app.post("/search/:listType", function (req, res) {
 app.post("/update/:listType", function (req, res) {
   let current;
   if (req.params.listType === "Warnings") {
-    current = parseInt(chosenMember.warningCount);
+    current = parseInt(chosenMember.warnings);
   } else {
     current = parseInt(chosenMember.money);
   }
@@ -191,7 +191,7 @@ app.post("/add", function (req, res) {
   const newMemeber = {
     name: req.body.name,
     phoneNumber: req.body.phoneNumber,
-    warningCount: req.body.warningCount,
+    warnings: req.body.warnings,
     money: req.body.money,
   };
 

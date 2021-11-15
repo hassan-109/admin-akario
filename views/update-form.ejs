@@ -14,7 +14,7 @@
         <form id="update-form" method="post" action="/update/<%=title%>">
           <div class="user-box" >
               <% if (title === "Warnings") { %>
-               <label>Current warning : <%= member.warningCount %></label>
+               <label>Current warning : <%= member.warnings %></label>
               <% } else {%>
                 <label>Current money : <%= member.money %> <span>K</span></label>
                 <% }%>
