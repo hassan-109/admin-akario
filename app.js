@@ -32,7 +32,7 @@ app.get("/login", function (req, res) {
 });
 
 app.get("/test", function (req, res) {
-  mongodbDatabase.updateMember("61922f4e3e73b03693c3b5e2","Warnings",0,(callBack)=>{
+  mongodbDatabase.deleteMember("61924836b125f7a6292c88cf",(callBack)=>{
     res.send(callBack)
   });
 });

@@ -82,4 +82,9 @@ exports.updateMember = (id, type, newValue, callBack) => {
   });
 };
 
-exports.deleteMember = (id, callBack) => {};
+exports.deleteMember = (id, callBack) => {
+  MemberModel.findByIdAndRemove(id, (error, result) => {
+    if (error) callBack(null);
+    else callBack(result);
+  });
+};
