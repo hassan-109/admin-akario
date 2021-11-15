@@ -2,7 +2,7 @@ const e = require("express");
 const mongoose = require("mongoose");
 
 mongoose.connect(
-  "mongodb+srv://admin:gPrZG5vQD5yx1L26@cluster0.7hl3w.mongodb.net/akarioDataBase?retryWrites=true&w=majority",
+  process.env.DB_HOST_V3,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
