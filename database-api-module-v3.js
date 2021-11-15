@@ -68,19 +68,16 @@ exports.creatMember = (newMemeber, callBack) => {
 };
 
 exports.updateMember = (id, type, newValue, callBack) => {
-  let updatedValue 
+  let updatedValue;
   if (type === "Name") {
-    updatedValue = {"name": newValue,};
+    updatedValue = { name: newValue };
   } else if (type === "Warnings") {
-    updatedValue = {"warnings": newValue,};
+    updatedValue = { warnings: newValue };
   } else {
-    updatedValue = {"money": newValue,};
+    updatedValue = { money: newValue };
   }
-  MemberModel.findByIdAndUpdate(id,{$set: updatedValue},(error, result) => {
-    if (error){
-      console.log(error);
-      callBack(null);
-    } 
+  MemberModel.findByIdAndUpdate(id, { $set: updatedValue }, (error, result) => {
+    if (error) callBack(null);
     else callBack(result);
   });
 };
