@@ -32,7 +32,7 @@ app.get("/login", function (req, res) {
 });
 
 app.get("/test", function (req, res) {
-  mongodbDatabase.getSearchedMembers("لو",(callBack)=>{
+  mongodbDatabase.getMemberById("61922f4e3e73b03693c3b5e2",(callBack)=>{
     res.send(callBack)
   });
 });

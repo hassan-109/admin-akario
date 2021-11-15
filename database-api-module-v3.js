@@ -46,7 +46,12 @@ exports.getSearchedMembers = (q, callBack) => {
   });
 };
 
-exports.getMemberById = (id, callBack) => {};
+exports.getMemberById = (id, callBack) => {
+  MemberModel.findById(id, (error, result) => {
+    if (error) callBack(null);
+    else callBack(result);
+  });
+};
 
 exports.creatMember = (newMemeber, callBack) => {
   new MemberModel({
